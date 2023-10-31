@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
+  <test name="FAD test for VIP profiles">
+    <classes>
+      <class name="com.testclasses.HomePageTesting"/>
+    </classes>
+  </test> <!-- FAD test for VIP profiles -->
+</suite> <!-- Failed suite [Suite] -->

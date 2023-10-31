@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Mobile Browser Test Suite" parallel="tests" thread-count="1">
+    <test name="Mobile Browser Test">
+        <parameter name="deviceConfig" value="config1" />
+        <classes>
+            <class name="com.testclasses.HomePageTesting" />
+        </classes>
+    </test>
+    <test name="Mobile Browser Test1">
+        <parameter name="deviceConfig" value="config2" />
+        <classes>
+            <class name="com.testclasses.VIP_Profile_Testing" />
+        </classes>
+    </test>
+</suite>
+
