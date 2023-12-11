@@ -3,7 +3,7 @@
 <suite parallel="none" name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test name="Default test" verbose="2">
     <classes>
-      <class name="com.testclasses.VIP_Profile_Testing"/>
+      <class name="com.testclasses.FAD_Search_Testing"/>
     </classes>
   </test> <!-- Default test -->
 </suite> <!-- Failed suite [Default suite] -->

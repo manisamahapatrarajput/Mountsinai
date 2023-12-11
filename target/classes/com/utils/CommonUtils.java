@@ -16,6 +16,8 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -72,8 +74,6 @@ public class CommonUtils extends TestBase {
 			FirefoxOptions firefoxOptions = new FirefoxOptions();
 			 System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "/drivers/geckodriver.exe");
 
-			// code to troubleshoot chrome binary not found exception
-			//m chromeOptions.setBinary("C:/Program Files/Google/Chrome/Application/chrome.exe");
 			 driver = new FirefoxDriver(firefoxOptions);
 		driver.manage().window().maximize();
 		
@@ -81,12 +81,19 @@ public class CommonUtils extends TestBase {
 			InternetExplorerOptions ieOptions = new InternetExplorerOptions();
 			System.setProperty("webdriver.ie.driver", System.getProperty("user.dir") + "/drivers/IEDriverServer.exe");
 
-			// code to troubleshoot chrome binary not found exception
-			//m chromeOptions.setBinary("C:/Program Files/Google/Chrome/Application/chrome.exe");
 			driver = new InternetExplorerDriver(ieOptions);
 
 		driver.manage().window().maximize();
+		} else if (browser.equalsIgnoreCase("edge")) {
+		    EdgeOptions edgeOptions = new EdgeOptions();
+			System.setProperty("webdriver.edge.driver", System.getProperty("user.dir") + "/drivers/msedgedriver.exe");
+
+			driver = new EdgeDriver(edgeOptions);
+
+		driver.manage().window().maximize();
 		}
+		 
+		 
 
 		driver.manage().timeouts().implicitlyWait(Integer.parseInt(IMPLICIT), TimeUnit.SECONDS);
 
@@ -97,17 +104,17 @@ public class CommonUtils extends TestBase {
 		 public static void initializeConfig1WebDriver() throws Exception {
 	     String username = config.getProperty("config1.username");
 	        String accessKey = config.getProperty("config1.accessKey");
-	        String env1= config.getProperty("config1.environment");
 
 	        DesiredCapabilities capabilities = new DesiredCapabilities();
 	        capabilities.setCapability("browserstack.user", username);
 	        capabilities.setCapability("browserstack.key", accessKey);
-	        capabilities.setCapability("device", config.getProperty("config1.device"));
-	        capabilities.setCapability("os_version", config.getProperty("config1.osVersion"));
-	        capabilities.setCapability("browserName", config.getProperty("config1.browserName"));
-	        capabilities.setCapability("real_mobile", Boolean.parseBoolean(config.getProperty("config1.realMobile")));
-	        capabilities.setCapability("browserstack.appium_version", config.getProperty("config1.appiumVersion"));
-	        capabilities.setCapability("environment", env1);
+	        capabilities.setCapability("browser", config.getProperty("config1.browser"));
+	        capabilities.setCapability("browser_version", config.getProperty("config1.browser_version"));
+	        capabilities.setCapability("os", config.getProperty("config1.os"));
+	        capabilities.setCapability("os_version", config.getProperty("config1.os_version"));
+	      //  capabilities.setCapability("os_version", Boolean.parseBoolean(config.getProperty("config1.realMobile")));
+	       // capabilities.setCapability("browserstack.appium_version", config.getProperty("config1.appiumVersion"));
+	        
 
 	        Map<String, String> bsLocalArgs = new HashMap<>();
 	        bsLocalArgs.put("key", accessKey);
@@ -119,8 +126,6 @@ public class CommonUtils extends TestBase {
 	            capabilities
 	        );
 	        
-	       // driver.get(env1);
-	        
 	        
 	    }
 
@@ -128,7 +133,7 @@ public class CommonUtils extends TestBase {
 	      
 	        String username = config.getProperty("config2.username");
 	        String accessKey = config.getProperty("config2.accessKey");
-	        String env2= config.getProperty("config2.environment");
+	      
 
 	        DesiredCapabilities capabilities = new DesiredCapabilities();
 	        capabilities.setCapability("browserstack.user", username);
@@ -138,7 +143,7 @@ public class CommonUtils extends TestBase {
 	        capabilities.setCapability("browserName", config.getProperty("config2.browserName"));
 	        capabilities.setCapability("real_mobile", Boolean.parseBoolean(config.getProperty("config2.realMobile")));
 	        capabilities.setCapability("browserstack.appium_version", config.getProperty("config2.appiumVersion"));
-	        capabilities.setCapability("environment", env2);
+	        
 
 	        Map<String, String> bsLocalArgs = new HashMap<>();
 	        bsLocalArgs.put("key", accessKey);
@@ -148,7 +153,7 @@ public class CommonUtils extends TestBase {
 	        driver = new RemoteWebDriver(
 	            new java.net.URL("https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub"),
 	            capabilities);
-	        //driver.get(env2);
+	      
 
 	}
 	
@@ -307,6 +312,15 @@ public class CommonUtils extends TestBase {
 
 		click(elem);
 	}
+	
+	public static void selectDropDownoption(By locator, String optionText) throws InterruptedException {
+
+		WebElement dropdownElement= driver.findElement(locator);
+		Select dropdown= new Select(dropdownElement);
+		dropdown.selectByVisibleText(optionText);
+	}
+	
+	
 
 	public static void waitForVisibilityOfAllElements(final List<WebElement> elem) throws InterruptedException {
 

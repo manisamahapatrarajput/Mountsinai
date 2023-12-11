@@ -2,7 +2,8 @@
 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="Mobile Browser Test Suite" parallel="tests" thread-count="1">
+
+<suite name="Mobile Browser Test Suite" parallel="tests" thread-count="2">
     <test name="Mobile Browser Test">
         <parameter name="deviceConfig" value="config1" />
         <classes>

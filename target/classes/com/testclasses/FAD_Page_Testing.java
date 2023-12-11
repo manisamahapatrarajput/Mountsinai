@@ -21,7 +21,7 @@ public class FAD_Page_Testing extends TestBase {
 		HomePage.navigateToUrl(testUrl);
 		HomePage.verifyPageTitle();
 		FindADoctorPage.goToFADPage();
-		//FindADoctorPage.clickOnSearchByName();
+		FindADoctorPage.clickOnSearchByName();
 		FindADoctorPage.verifyVIPProfiles();
 		logInfo("===== TestCase  VeriffocusOnElementyVIPProfiles Load Ended =====");
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="1" parallel="tests" name="Failed suite [Mobile Browser Test Suite]" guice-stage="DEVELOPMENT">
+<suite thread-count="2" parallel="tests" name="Failed suite [Mobile Browser Test Suite]" guice-stage="DEVELOPMENT">
   <parameter name="deviceConfig" value="config2"/>
   <test name="Mobile Browser Test">
     <parameter name="deviceConfig" value="config1"/>
@@ -14,31 +14,6 @@
       <class name="com.testclasses.VIP_Profile_Testing"/>
     </classes>
   </test> <!-- Mobile Browser Test1 -->
-  <test parallel="tests" name="Mobile Browser Test(failed)">
-    <parameter name="deviceConfig" value="config1"/>
-    <classes>
-      <class name="com.testclasses.VIP_Profile_Testing">
-        <methods>
-          <include name="setReport"/>
-          <include name="tearDown"/>
-          <include name="endReport"/>
-          <include name="closeExtent"/>
-          <include name="init"/>
-          <include name="FinishTesting"/>
-        </methods>
-      </class> <!-- com.testclasses.VIP_Profile_Testing -->
-      <class name="com.testclasses.HomePageTesting">
-        <methods>
-          <include name="HomePageLoadTest"/>
-          <include name="tearDown"/>
-          <include name="endReport"/>
-          <include name="generalVerificationHomePage"/>
-          <include name="init"/>
-          <include name="FinishTesting"/>
-        </methods>
-      </class> <!-- com.testclasses.HomePageTesting -->
-    </classes>
-  </test> <!-- Mobile Browser Test(failed) -->
   <test parallel="tests" name="Mobile Browser Test1(failed)">
     <parameter name="deviceConfig" value="config2"/>
     <classes>
@@ -46,8 +21,6 @@
         <methods>
           <include name="setReport"/>
           <include name="tearDown"/>
-          <include name="endReport"/>
-          <include name="closeExtent"/>
           <include name="init"/>
           <include name="VerifyVIPProfiles"/>
           <include name="FinishTesting"/>

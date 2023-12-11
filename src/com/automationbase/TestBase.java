@@ -39,6 +39,8 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.browserstack.local.Local;
+import com.qa.testrailmanager.SSLCertificateHandler;
+import com.qa.testrailmanager.TestRailManager;
 import com.utils.CommonUtils;
 import com.utils.XlsReader;
 import java.net.URL;
@@ -60,6 +62,7 @@ public class TestBase {
 	public static ExtentReports extent;
 	public static ExtentTest logger;
 	public static ExtentTest extentTest;
+	protected static String testCaseId;
 
 	private static Logger log = Logger.getLogger(TestBase.class);
 
@@ -84,7 +87,8 @@ public class TestBase {
 
 	@BeforeTest
 	public static void init() throws Exception {
-
+		
+		SSLCertificateHandler.ignoreSSLCertificate();
 		config = new Properties();
 		FileInputStream ip = new FileInputStream(new File(PROJECTDIR + "/config/config.properties"));
 		config.load(ip);
@@ -93,9 +97,9 @@ public class TestBase {
 
 		if (platform != null) {
 			// Perform actions based on the platform
-			if ("desktop".equalsIgnoreCase(platform)) {
+			if ("desktop_local".equalsIgnoreCase(platform)) {
 				// Initialize and run desktop web browser tests
-				System.out.println("Running desktop web browser tests...");
+				System.out.println("Running desktop local  web browser tests...");
 
 				// Configure WebDriver for desktop testing
 				// ...
@@ -107,14 +111,24 @@ public class TestBase {
 				CommonUtils.openBrowser(datatable.getCellData("Browser", 0, 2));
 				log.info("Launched the " + datatable.getCellData("Browser", 0, 2) + " Browser");
 
-			} else if ("mobile_browser".equalsIgnoreCase(platform)) {
+			} else if ("desktop_browserstack".equalsIgnoreCase(platform)) {
+				// Initialize and run mobile web browser tests
+				System.out.println("Running desktop browserstack tests...");
+				logInfo = new Properties();
+				PropertyConfigurator.configure(PROJECTDIR + "/config/log4j.properties");
+
+				 datatable = new XlsReader(PROJECTDIR + "/testdata/TestInput.xlsx");
+				
+				CommonUtils.initializeConfig1WebDriver();
+
+			}else if ("mobile_browser_browserstack".equalsIgnoreCase(platform)) {
 				// Initialize and run mobile web browser tests
 				System.out.println("Running mobile web browser tests...");
 				logInfo = new Properties();
 				PropertyConfigurator.configure(PROJECTDIR + "/config/log4j.properties");
 
 				 datatable = new XlsReader(PROJECTDIR + "/testdata/TestInput.xlsx");
-				CommonUtils.initializeConfig1WebDriver();
+				
 				CommonUtils.initializeConfig2WebDriver();
 
 			} else if ("mobile_app".equalsIgnoreCase(platform)) {
@@ -146,6 +160,18 @@ public class TestBase {
 	    }
 
 	    extent.flush();
+	}
+	
+	@AfterMethod
+	public void addResultsToTestRail(ITestResult result) {
+		if(result.getStatus() == ITestResult.SUCCESS) {
+			TestRailManager.addResultsForTestCase(testCaseId, TestRailManager.Test_Case_Pass_Status, "");
+		}else if(result.getStatus() == ITestResult.FAILURE) {
+			TestRailManager.addResultsForTestCase(testCaseId, TestRailManager.Test_Case_Fail_Status,
+					"test got failed"+ result.getTestName() + ": Failed");
+			System.out.print("failed+");
+			
+		}
 	}
 
 	@AfterTest

@@ -1,0 +1,8 @@
+com\gurock\testrail\APIClient.class
+com\gurock\testrail\APIException.class
+com\automationbase\ExtentManager.class
+com\qa\testrailmanager\SSLCertificateHandler.class
+com\utils\XlsReader.class
+NotUsed_Classes\test.class
+com\qa\testrailmanager\SSLCertificateHandler$1.class
+com\utils\EmailReport.class
